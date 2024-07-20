@@ -1,0 +1,109 @@
+return {
+  {
+    "williamboman/mason.nvim",
+    lazy = false,
+    config = function()
+      require("mason").setup()
+    end,
+  },
+  {
+    "williamboman/mason-lspconfig.nvim",
+    lazy = false,
+    opts = {
+      auto_install = true,
+    },
+  },
+  {
+    "neovim/nvim-lspconfig",
+    lazy = false,
+    config = function()
+      local capabilities = require("cmp_nvim_lsp").default_capabilities()
+
+      local lspconfig = require("lspconfig")
+      local util = require("lspconfig/util")
+      lspconfig.rust_analyzer.setup({
+        filetypes = { "rust" },
+        root_dir = util.root_pattern("Cargo.toml"),
+        --on_attach = function(client, bufnr)
+          --vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+          --vim.api.nvim_buf_set_option("n", "<leader>ca", vim.lsp.buf.code_action, {})
+        --end,
+        capabilities = capabilities,
+        settings = {
+          ["rust-analyzer"] = {
+            cargo = {
+              allFeatures = true,
+            },
+          },
+        },
+      })
+      lspconfig.tsserver.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.solargraph.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.html.setup({
+        capabilities = capabilities,
+      })
+      lspconfig.lua_ls.setup({
+        capabilities = capabilities,
+      })
+
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
+      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
+    end,
+  },
+  {
+    "rust-lang/rust.vim",
+    config = function()
+      vim.g.rustfmt_autosave = 1
+    end,
+  },
+  {
+    "sigmasd/deno-nvim",
+    config = function ()
+      require('deno-nvim').setup();
+    end
+  },
+  --[[
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^4",
+    lazy = false,
+    config = function()
+      --local rustaceanvim = require('rustaceanvim')
+      local bufnr = vim.api.nvim_get_current_buf()
+      vim.keymap.set("n", "<leader>a", function()
+        --vim.cmd.RustLsp("codeAction") -- supports rust-analyzer's grouping
+        vim.lsp.buf.codeAction() --if you don't want grouping.
+      end, { silent = true, buffer = bufnr })
+
+      vim.g.rustaceanvim = {
+        -- Plugin configuration
+        tools = {
+          hover_actions = {
+            replace_builtin_hover = false
+          },
+          code_actions = {}
+        },
+        -- LSP configuration
+        server = {
+          on_attach = function(client, buf)
+            -- you can also put keymaps in here
+          end,
+          default_settings = {
+            -- rust-analyzer language server configuration
+            ["rust-analyzer"] = {},
+          },
+        },
+        -- DAP configuration
+        dap = {},
+      }
+    end,
+  },
+  ]]
+  --
+}
