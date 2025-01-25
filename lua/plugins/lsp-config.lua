@@ -51,8 +51,8 @@ return {
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
-      vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, {})
-      vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, {})
+      vim.keymap.set("n", "<leader>mn", vim.lsp.buf.definition, {})
+      vim.keymap.set("n", "<leader>rf", vim.lsp.buf.references, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})
     end,
   },
@@ -62,12 +62,16 @@ return {
       vim.g.rustfmt_autosave = 1
     end,
   },
-  {
-    "sigmasd/deno-nvim",
-    config = function ()
-      require('deno-nvim').setup();
-    end
-  },
+--  {
+--    "sigmasd/deno-nvim",
+--    config = function ()
+--      local util = require("lspconfig/util")
+--      require('deno-nvim').setup(
+--        {
+--          root_dir = util.root_pattern("mod.ts", "mod.js"),
+--        });
+--    end
+--  },
   --[[
   {
     "mrcjkb/rustaceanvim",

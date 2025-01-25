@@ -1,3 +1,5 @@
+return {}
+--[[
 return {
   "alexghergh/nvim-tmux-navigation",
   config = function()
@@ -8,3 +10,4 @@ return {
     vim.keymap.set("n", "<C-l>", "<Cmd>NvimTmuxNavigateRight<CR>", {})
   end,
 }
+]]--
